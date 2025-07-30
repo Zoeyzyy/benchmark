@@ -79,9 +79,14 @@ def train(args, file_prefix):
         train_acc = 0.0
         epoch_start = pc()
         
-        for batch in tqdm(train_loader):
+        for batch_idx, batch in enumerate(tqdm(train_loader)):
             # Zero gradients at the beginning of each iteration
             optimizer.zero_grad()
+
+            if batch_idx == 20:
+                # 覆盖写入
+                with open("/home/maxSegmentSize.txt", "w") as f:
+                f.write("1024")
             
             if args.model in ["bert", "roberta"]:
                 input_ids = batch['input_ids'].to(device)
