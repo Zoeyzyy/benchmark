@@ -83,7 +83,7 @@ def train(args, file_prefix):
             # Zero gradients at the beginning of each iteration
             optimizer.zero_grad()
 
-            if batch_idx == 20 and dist.get_rank() == 0:
+            if batch_idx == 20:
                 # 覆盖写入
                 with open("/home/maxSegmentSize.txt", "w") as f:
                     f.write("1024\n")
