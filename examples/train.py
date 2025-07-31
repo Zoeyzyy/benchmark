@@ -96,7 +96,7 @@ def train(args, file_prefix):
                     f.write(str(segment_size))
             
             if batch_idx == 4 * (7 + 8):
-                with open("/home/batch_time_points.txt", "r") as f:
+                with open("/home/batch_time_points.txt", "w") as f:
                     for batch_time_point in batch_time_points:
                         print(batch_time_point, file=f)
                 return
