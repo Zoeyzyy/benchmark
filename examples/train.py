@@ -86,7 +86,7 @@ def train(args, file_prefix):
             if batch_idx == 4:
                 # 覆盖写入
                 with open("/home/maxSegmentSize.txt", "w") as f:
-                    f.write("1024\n")
+                    f.write("1048576 1048576\n")
             
             if args.model in ["bert", "roberta"]:
                 input_ids = batch['input_ids'].to(device)
