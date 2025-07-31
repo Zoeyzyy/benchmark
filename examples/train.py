@@ -95,10 +95,11 @@ def train(args, file_prefix):
                 with open("/home/maxSegmentSize.txt", "w") as f:
                     f.write(str(segment_size))
             
-            if batch_idx == 4 * (7 + 7):
+            if batch_idx == 4 * (7 + 7) + 1:
                 with open("/home/batch_time_points.txt", "r") as f:
                     for batch_time_point in batch_time_points:
                         print(batch_time_point, file=f)
+                return
             
             if args.model in ["bert", "roberta"]:
                 input_ids = batch['input_ids'].to(device)
