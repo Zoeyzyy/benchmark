@@ -83,12 +83,12 @@ def train(args, file_prefix):
             # Zero gradients at the beginning of each iteration
             optimizer.zero_grad()
 
-            if batch_idx % 2 == 0:
-                times = batch_idx / 2
-                segment_size = 1048576 / pow(2, times)
+            if batch_idx % 4 == 0:
+                times = batch_idx / 4
+                segment_size = (int)(1048576 / pow(2, times))
                 # 覆盖写入
                 with open("/home/maxSegmentSize.txt", "w") as f:
-                    f.write(str(segment_size))      
+                    f.write(str(segment_size))  
             
             
             if args.model in ["bert", "roberta"]:
