@@ -88,7 +88,10 @@ def train(args, file_prefix):
                 segment_size = (int)(1048576 / pow(2, times))
                 # 覆盖写入
                 with open("/home/maxSegmentSize.txt", "w") as f:
-                    f.write(str(segment_size))  
+                    if dist.get_rank() == 1:
+                        f.write(str(segment_size) + " " + str(1048576) + "\n")
+                    elif dist.get_rank() == 0:
+                        f.write(str(1048576) + " " +str(segment_size) + "\n")
             
             
             if args.model in ["bert", "roberta"]:
