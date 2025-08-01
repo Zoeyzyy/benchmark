@@ -93,7 +93,10 @@ def train(args, file_prefix):
                     segment_size = (int)(1048576 / pow(2, 14 - times))
                 # 覆盖写入
                 with open("/home/maxSegmentSize.txt", "w") as f:
-                    f.write(str(segment_size))
+                    if dist.get_rank() == 0:
+                        f.write(str(segment_size) + " " + str(1048576))
+                    else:
+                        f.write(str(1048576) + " " + str(segment_size))
             
             if batch_idx == 4 * (7 + 8):
                 with open("/home/batch_time_points.txt", "w") as f:
