@@ -95,11 +95,11 @@ def train(args, file_prefix):
                 # 覆盖写入
                 with open("/home/maxSegmentSize.txt", "w") as f:
                     if dist.get_rank() == 0:
-                        f.write(str(segment_size) + " " + str(segment_size))
+                        f.write(str(segment_size) + " " + str(1048576))
                     elif dist.get_rank() == 1:
-                        f.write(str(segment_size) + " " + str(segment_size))
+                        f.write(str(1048576) + " " + str(segment_size))
                     elif dist.get_rank() == 2:
-                        f.write(str(segment_size) + " " + str(segment_size))
+                        f.write(str(1048576) + " " + str(1048576))
             
             if batch_idx == 4 * (all_times + 1):
                 with open("/home/batch_time_points.txt", "w") as f:
