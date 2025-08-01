@@ -79,6 +79,7 @@ def train(args, file_prefix):
         train_acc = 0.0
         epoch_start = pc()
         batch_time_points = []
+        all_times = 18
         
         for batch_idx, batch in enumerate(tqdm(train_loader)):
             # Zero gradients at the beginning of each iteration
@@ -87,18 +88,20 @@ def train(args, file_prefix):
             if batch_idx % 4 == 0:
                 times = batch_idx / 4
                 batch_time_points.append(datetime.now())
-                if times <= 7:
+                if times <= all_times / 2:
                     segment_size = (int)(1048576 / pow(2, times))
                 else:
-                    segment_size = (int)(1048576 / pow(2, 14 - times))
+                    segment_size = (int)(1048576 / pow(2, all_times - times))
                 # 覆盖写入
                 with open("/home/maxSegmentSize.txt", "w") as f:
                     if dist.get_rank() == 0:
                         f.write(str(segment_size) + " " + str(segment_size))
-                    else:
+                    elif dist.get_rank() == 1:
+                        f.write(str(segment_size) + " " + str(segment_size))
+                    elif dist.get_rank() == 2:
                         f.write(str(segment_size) + " " + str(segment_size))
             
-            if batch_idx == 4 * (7 + 8):
+            if batch_idx == 4 * (all_times + 1):
                 with open("/home/batch_time_points.txt", "w") as f:
                     for batch_time_point in batch_time_points:
                         print(batch_time_point, file=f)
