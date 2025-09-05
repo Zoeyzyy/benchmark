@@ -79,7 +79,7 @@ def train(args, file_prefix):
         train_acc = 0.0
         epoch_start = pc()
         batch_time_points = []
-        all_times = 18
+        all_times = 14
         
         for batch_idx, batch in enumerate(tqdm(train_loader)):
             # Zero gradients at the beginning of each iteration
