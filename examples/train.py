@@ -79,7 +79,7 @@ def train(args, file_prefix):
         train_acc = 0.0
         epoch_start = pc()
         batch_time_points = []
-        all_times = 12
+        all_times = 18
         init_size = 1048576
         
         for batch_idx, batch in enumerate(tqdm(train_loader)):
@@ -90,9 +90,9 @@ def train(args, file_prefix):
                 times = batch_idx / 4
                 batch_time_points.append(datetime.now())
                 if times <= all_times / 2:
-                    segment_size = (int)(init_size / pow(4, times))
+                    segment_size = (int)(init_size / pow(2, times))
                 else:
-                    segment_size = (int)(init_size / pow(4, all_times - times))
+                    segment_size = (int)(init_size / pow(2, all_times - times))
                 # 覆盖写入
                 with open("/home/maxSegmentSize.txt", "w") as f:
                     if dist.get_rank() == 0:
