@@ -107,7 +107,7 @@ def train(args, file_prefix):
             #             print(batch_time_point, file=f)
             #     return
             
-            segment_size = (int)(1048576 / pow(2, 7))
+            segment_size = (int)(1048576 / pow(2, 9))
             with open("/home/maxSegmentSize.txt", "w") as f:
                 if dist.get_rank() == 0:
                     f.write(str(segment_size) + " " + str(1048576))
