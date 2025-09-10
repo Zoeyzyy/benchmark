@@ -80,7 +80,7 @@ def train(args, file_prefix):
         epoch_start = pc()
         batch_time_points = []
         all_times = 12
-        init_size = 1048576 * 16
+        init_size = 1048576
         
         for batch_idx, batch in enumerate(tqdm(train_loader)):
             # Zero gradients at the beginning of each iteration
