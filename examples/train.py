@@ -110,9 +110,9 @@ def train(args, file_prefix):
             segment_size = (int)(1048576 / pow(2, 9))
             with open("/home/maxSegmentSize.txt", "w") as f:
                 if dist.get_rank() == 0:
-                    f.write(str(1048576) + " " + str(segment_size))
-                elif dist.get_rank() == 1:
                     f.write(str(segment_size) + " " + str(1048576))
+                elif dist.get_rank() == 1:
+                    f.write(str(1048576) + " " + str(segment_size))
                 elif dist.get_rank() == 2:
                     f.write(str(1048576) + " " + str(1048576))
         
