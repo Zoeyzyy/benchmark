@@ -86,40 +86,40 @@ def train(args, file_prefix):
             # Zero gradients at the beginning of each iteration
             optimizer.zero_grad()
 
-            if batch_idx % 4 == 0:
-                times = batch_idx / 4
-                batch_time_points.append(datetime.now())
-                if times <= all_times / 2:
-                    segment_size = (int)(init_size / pow(2, times))
-                else:
-                    segment_size = (int)(init_size / pow(2, all_times - times))
-                # 覆盖写入
-                with open("/home/maxSegmentSize.txt", "w") as f:
-                    # if dist.get_rank() == 0:
-                    #     f.write(str(segment_size) + " " + str(init_size))
-                    # elif dist.get_rank() == 1:
-                    #     f.write(str(init_size) + " " + str(segment_size))
-                    # elif dist.get_rank() == 2:
-                    #     f.write(str(init_size) + " " + str(init_size))
-                    f.write(str(segment_size) + " " + str(segment_size))
+            # if batch_idx % 4 == 0:
+            #     times = batch_idx / 4
+            #     batch_time_points.append(datetime.now())
+            #     if times <= all_times / 2:
+            #         segment_size = (int)(init_size / pow(2, times))
+            #     else:
+            #         segment_size = (int)(init_size / pow(2, all_times - times))
+            #     # 覆盖写入
+            #     with open("/home/maxSegmentSize.txt", "w") as f:
+            #         if dist.get_rank() == 0:
+            #             f.write(str(segment_size) + " " + str(init_size))
+            #         elif dist.get_rank() == 1:
+            #             f.write(str(init_size) + " " + str(segment_size))
+            #         elif dist.get_rank() == 2:
+            #             f.write(str(init_size) + " " + str(init_size))
+            #         # f.write(str(segment_size) + " " + str(segment_size))
             
-            if batch_idx == 4 * (all_times + 1):
-                with open("/home/batch_time_points.txt", "w") as f:
-                    for batch_time_point in batch_time_points:
-                        print(batch_time_point, file=f)
-                return
-            
-            # segment_size = (int)(init_size / pow(2, 9))
-            # with open("/home/maxSegmentSize.txt", "w") as f:
-            #     if dist.get_rank() == 0:
-            #         f.write(str(segment_size) + " " + str(init_size))
-            #     elif dist.get_rank() == 1:
-            #         f.write(str(init_size) + " " + str(segment_size))
-            #     elif dist.get_rank() == 2:
-            #         f.write(str(init_size) + " " + str(init_size))
-        
-            # if batch_idx == 2:
+            # if batch_idx == 4 * (all_times + 1):
+            #     with open("/home/batch_time_points.txt", "w") as f:
+            #         for batch_time_point in batch_time_points:
+            #             print(batch_time_point, file=f)
             #     return
+            
+            segment_size = (int)(init_size / pow(2, 9))
+            with open("/home/maxSegmentSize.txt", "w") as f:
+                if dist.get_rank() == 0:
+                    f.write(str(segment_size) + " " + str(init_size))
+                elif dist.get_rank() == 1:
+                    f.write(str(init_size) + " " + str(segment_size))
+                elif dist.get_rank() == 2:
+                    f.write(str(init_size) + " " + str(init_size))
+        
+            if batch_idx == 2:
+                return
             
             if args.model in ["bert", "roberta"]:
                 input_ids = batch['input_ids'].to(device)
